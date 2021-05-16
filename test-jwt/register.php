@@ -1,6 +1,5 @@
 <?php
 
-use Firebase\JWT\JWT;
 use App\Helpers\Headers;
 use App\Features\Users\Services\UsersService;
 use App\Features\Users\Dtos\CreateUserDto;
@@ -23,15 +22,21 @@ try {
 
     http_response_code(200);
     echo json_encode([
-        "error" => false,
-        "message" => "User registered",
+        "data" => null,
+        "meta" => [
+            "error" => false,
+            "message" => "User registered",
+        ],
     ]);
 }
 
 catch (\Exception $e) {
     http_response_code(400);
     echo json_encode([
-        "error" => true,
-        "message" => $e->getMessage(),
+        "data" => null,
+        "meta" => [
+            "error" => true,
+            "message" => $e->getMessage(),
+        ],
     ]);
 }

@@ -40,14 +40,26 @@ class UsersRepository {
         $this->storeData();
     }
 
-    public function emailExists(string $email): bool
+    public function findUserByEmail(string $email): ?User
     {
-        foreach ($this->data as $user) {
-            if ($user->email === $email) {
-                return true;
+       foreach ($this->data as $userData) {
+            if ($userData->email === $email) {
+                return $this->asUser($userData);
             }
         }
+        
+        return null;
+    }
 
-        return false;
+    public function asUser(object $data): User
+    {
+        $user = new User();
+        $user->id = $data->id;
+        $user->first_name = $data->first_name;
+        $user->last_name = $data->last_name;
+        $user->email = $data->email;
+        $user->password = $data->password;
+
+        return $user;
     }
 }
