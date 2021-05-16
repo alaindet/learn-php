@@ -2,7 +2,6 @@
 
 use App\Helpers\Headers;
 use App\Features\Users\Services\UsersService;
-use App\Features\Users\Dtos\AuthenticateUserDto;
 
 require __DIR__ . "./src/bootstrap.php";
 
@@ -10,19 +9,14 @@ Headers::setCors($origin = "localhost");
 Headers::setContentType();
 
 try {
-    $requestBody = json_decode(file_get_contents("php://input"));
 
-    $dtoIn = new AuthenticateUserDto();
-    $dtoIn->email = $requestBody->email;
-    $dtoIn->password = $requestBody->password;
-
-    $dtoOut = (array) UsersService::authenticateUser($dtoIn);
+    $data = UsersService::checkUserToken($_SERVER['HTTP_AUTHORIZATION']);
 
     $response = json_encode([
-        "data" => $dtoOut,
+        "data" => $data,
         "meta" => [
             "error" => false,
-            "message" => "User logged in",  
+            "message" => "Protected route accessed",  
         ],
     ]);
 
@@ -40,6 +34,6 @@ catch (\Exception $e) {
         ],
     ]);
 
-    http_response_code(400);
+    http_response_code(401);
     echo $response;
 }

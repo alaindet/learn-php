@@ -64,4 +64,14 @@ class UsersService {
 
         return $dtoOut;
     }
+
+    static public function checkUserToken(?string $authHeader): array
+    {
+        try {
+            [$bearer, $token] = explode(" ", $authHeader);
+            return (array) JWT::decode($token, APP_JWT_SECRET, ['HS256']);
+        } catch (\Exception $e) {
+            throw new \Exception("Invalid or missing authorization token");
+        }
+    }
 }
