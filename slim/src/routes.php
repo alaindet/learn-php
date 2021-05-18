@@ -1,6 +1,6 @@
 <?php
 
-use App\Actions\HomeAction;
+use App\Core\Actions\HomeAction;
 
 $app->get('/', HomeAction::class);
 
