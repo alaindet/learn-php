@@ -3,7 +3,5 @@ node_modules/
 vendor/
 
 # Environment files
-.env
-.env.production
-.env.development
+.env*
 !.env.example
