@@ -1,14 +1,18 @@
 <?php
 
+use Slim\Routing\RouteCollectorProxy as RouteGroup;
+
 use App\Features\Users\Controllers\UsersController;
 use App\Core\Middlewares\JsonRequestBodyMiddleware;
+use App\Core\Middlewares\JsonResponseBodyMiddleware;
+
+$usersRoutes = function(RouteGroup $group)
+{
+    $group->post('/login', UsersController::class . ':login');
+    $group->post('/register', UsersController::class . ':register');
+};
 
 $app
-    ->post('/users/login', UsersController::class.':login')
-    // TODO: Use middleware group
-    ->add(JsonRequestBodyMiddleware::class);
-
-
-$app
-    ->post('/users/register', UsersController::class.':register')
-    ->add(JsonRequestBodyMiddleware::class);
+    ->group('/users', $usersRoutes)
+    ->add(JsonRequestBodyMiddleware::class)
+    ->add(JsonResponseBodyMiddleware::class);
