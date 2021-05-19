@@ -1,13 +1,14 @@
 <?php
 
 use App\Features\Users\Controllers\UsersController;
-use App\Core\Middlewares\JsonBodyParserMiddleware;
+use App\Core\Middlewares\JsonRequestBodyMiddleware;
 
 $app
     ->post('/users/login', UsersController::class.':login')
-    ->add(JsonBodyParserMiddleware::class);
+    // TODO: Use middleware group
+    ->add(JsonRequestBodyMiddleware::class);
 
 
 $app
     ->post('/users/register', UsersController::class.':register')
-    ->add(JsonBodyParserMiddleware::class);
+    ->add(JsonRequestBodyMiddleware::class);
