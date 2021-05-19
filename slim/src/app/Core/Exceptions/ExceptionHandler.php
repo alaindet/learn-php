@@ -23,9 +23,9 @@ class ExceptionHandler {
             $status = 404;
         }
 
-        return JsonResponse::create(new Response(), $status, [
+        return JsonResponse::create([
             'error' => true,
             'message' => $exception->getMessage(),
-        ]);
+        ], $status);
     }
 }

@@ -7,18 +7,18 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 
 use App\Core\Http\JsonResponse;
 
-class UsersController {
-
+class UsersController
+{
     public function login(Request $request, Response $response): Response
     {
-        return JsonResponse::create($response, 200, [
+        return JsonResponse::from($response->withStatus(200), [
             'message' => 'User authenticated'
         ]);
     }
 
     public function register(Request $request, Response $response): Response
     {
-        return JsonResponse::create($response, 201, [
+        return JsonResponse::from($response->withStatus(201), [
             'message' => 'User registered'
         ]);
     }

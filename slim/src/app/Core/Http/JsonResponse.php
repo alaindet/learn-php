@@ -7,15 +7,23 @@ use Psr\Http\Message\ResponseInterface;
 
 abstract class JsonResponse
 {
-    static public function create(
+    static public function from(
         ResponseInterface $response,
-        int $statusCode,
         $data
     ): ResponseInterface
     {
         $payload = json_encode($data, JSON_UNESCAPED_UNICODE);
+        $response->getBody()->write($payload);
+        return $response->withHeader('Content-Type', 'application/json');
+    }
 
+    static public function create(
+        $data,
+        int $statusCode = 200
+    ): ResponseInterface
+    {
         $response = new Response();
+        $payload = json_encode($data, JSON_UNESCAPED_UNICODE);
         $response->getBody()->write($payload);
 
         return $response
