@@ -7,6 +7,7 @@ use Slim\Psr7\Response;
 use Slim\Exception\HttpNotFoundException;
 
 use App\Core\Exceptions\HttpException;
+use App\Core\Http\JsonResponse;
 
 class ExceptionHandler {
     public function __invoke(
@@ -22,18 +23,9 @@ class ExceptionHandler {
             $status = 404;
         }
 
-        $payloadData = [
+        return JsonResponse::create(new Response(), $status, [
             'error' => true,
             'message' => $exception->getMessage(),
-        ];
-
-        $payload = json_encode($payloadData, JSON_UNESCAPED_UNICODE);
-
-        $response = new Response();
-        $response->getBody()->write($payload);
-
-        return $response
-            ->withHeader('Content-Type', 'application/json')
-            ->withStatus($status);
+        ]);
     }
 }

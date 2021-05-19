@@ -4,7 +4,6 @@ use Slim\Routing\RouteCollectorProxy as RouteGroup;
 
 use App\Features\Users\Controllers\UsersController;
 use App\Core\Middlewares\JsonRequestBodyMiddleware;
-use App\Core\Middlewares\JsonResponseBodyMiddleware;
 
 $usersRoutes = function(RouteGroup $group)
 {
@@ -14,5 +13,4 @@ $usersRoutes = function(RouteGroup $group)
 
 $app
     ->group('/users', $usersRoutes)
-    ->add(JsonRequestBodyMiddleware::class)
-    ->add(JsonResponseBodyMiddleware::class);
+    ->add(JsonRequestBodyMiddleware::class);
