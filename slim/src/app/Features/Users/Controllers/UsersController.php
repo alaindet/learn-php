@@ -20,20 +20,21 @@ class UsersController
 
     public function register(Request $request, Response $response): Response
     {
-        // $requestBody = $request->getParsedBody();
+        $requestBody = $request->getParsedBody();
 
-        // // TODO: Validate body
+        // TODO: Validate body
 
-        // $dto = new CreateUserDto();
-        // $dto->first_name = $requestBody->first_name;
-        // $dto->last_name = $requestBody->last_name;
-        // $dto->email = $requestBody->email;
-        // $dto->password = $requestBody->password;
+        $dto = new CreateUserDto();
+        $dto->displayName = $requestBody['displayName'];
+        $dto->username = $requestBody['username'];
+        $dto->email = $requestBody['email'];
+        $dto->password = $requestBody['password'];
 
-        // UsersService::createUser($dto);
+        UsersService::createUser($dto);
 
         return JsonResponse::from($response->withStatus(201), [
-            'message' => 'User registered'
+            'error' => false,
+            'message' => 'User registered',
         ]);
     }
 }

@@ -34,8 +34,8 @@ class UsersRepository
     {
         $user = new User();
         $user->id = time();
-        $user->first_name = $dto->first_name;
-        $user->last_name = $dto->last_name;
+        $user->display_name = $dto->displayName;
+        $user->username = $dto->username;
         $user->email = $dto->email;
         $user->password = password_hash($dto->password, PASSWORD_BCRYPT);
 
@@ -58,8 +58,8 @@ class UsersRepository
     {
         $user = new User();
         $user->id = $data->id;
-        $user->first_name = $data->first_name;
-        $user->last_name = $data->last_name;
+        $user->display_name = $data->displayName;
+        $user->username = $data->username;
         $user->email = $data->email;
         $user->password = $data->password;
 

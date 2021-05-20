@@ -18,4 +18,9 @@ abstract class HttpExceptionFactory
     {
         return new HttpException(415, $message);
     }
+
+    static public function conflict(string $message): HttpException
+    {
+        return new HttpException(409, $message);
+    }
 }

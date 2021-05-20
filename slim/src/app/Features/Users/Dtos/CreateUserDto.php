@@ -4,8 +4,8 @@ namespace App\Features\Users\Dtos;
 
 class CreateUserDto
 {
-    public $first_name;
-    public $last_name;
+    public $displayName;
+    public $username;
     public $email;
     public $password;
 }

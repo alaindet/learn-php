@@ -5,8 +5,8 @@ namespace App\Features\Users\Entities;
 class User
 {
     public $id;
-    public $first_name;
-    public $last_name;
+    public $display_name;
+    public $username;
     public $email;
     public $password;
 }

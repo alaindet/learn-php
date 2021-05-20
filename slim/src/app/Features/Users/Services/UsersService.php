@@ -8,6 +8,7 @@ use App\Features\Users\Dtos\CreateUserDto;
 use App\Features\Users\Dtos\AuthenticateUserDto;
 use App\Features\Users\Dtos\AuthenticatedUserDto;
 use App\Features\Users\Repositories\UsersRepository;
+use App\Core\Exceptions\HttpExceptionFactory;
 
 class UsersService
 {
@@ -17,7 +18,7 @@ class UsersService
 
         if ($repo->findUserByEmail($dto->email) !== null) {
             $message = "User with email {$dto->email} already exists";
-            throw new \Exception($message);
+            throw HttpExceptionFactory::conflict($message);
         }
 
         $repo->createUser($dto);
