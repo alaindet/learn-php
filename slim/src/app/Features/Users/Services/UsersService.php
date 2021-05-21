@@ -4,11 +4,11 @@ namespace App\Features\Users\Services;
 
 use Firebase\JWT\JWT;
 
+use App\Core\Exceptions\HttpExceptionFactory;
 use App\Features\Users\Dtos\CreateUserDto;
 use App\Features\Users\Dtos\AuthenticateUserDto;
 use App\Features\Users\Dtos\AuthenticatedUserDto;
 use App\Features\Users\Repositories\UsersRepository;
-use App\Core\Exceptions\HttpExceptionFactory;
 
 class UsersService
 {
@@ -32,20 +32,18 @@ class UsersService
 
         $user = $repo->findUserByEmail($dtoIn->email);
 
-        if ($user === null) {
-            $message = "User with email {$dtoIn->email} does not exist";
-            throw new \Exception($message);
-        }
-
-        if (!password_verify($dtoIn->password, $user->password)) {
-            $message = "Wrong password";
-            throw new \Exception($message);
+        if (
+            $user === null ||
+            !password_verify($dtoIn->password, $user->password)
+        ) {
+            $message = 'Wrong email and/or password';
+            throw HttpExceptionFactory::unauthorized($message);
         }
 
         $issuerClaim = APP_JWT_ISSUER;
         $subjectClaim = $user->id; // TODO: Could be auth session ID
         $issuedAtClaim = time();
-        $expiresInClaim = $issuedAtClaim + 3600;
+        $expiresInClaim = $issuedAtClaim + 3600; // An hour
         $notBeforeClaim = $issuedAtClaim;
 
         $claims = [

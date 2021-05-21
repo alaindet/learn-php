@@ -1,0 +1,4 @@
+- [ ] Validation
+- [ ] Query builder
+- [ ] Dependency Injection
+- [ ] Add app config and .env files

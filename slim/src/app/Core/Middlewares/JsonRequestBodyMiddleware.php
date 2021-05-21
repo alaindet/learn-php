@@ -23,7 +23,7 @@ class JsonRequestBodyMiddleware implements MiddlewareInterface
             throw HttpExceptionFactory::unsupportedMediaType($message);
         }
 
-        $body = json_decode(file_get_contents('php://input'), true);
+        $body = json_decode(file_get_contents('php://input'));
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             $message = 'Invalid JSON content';
