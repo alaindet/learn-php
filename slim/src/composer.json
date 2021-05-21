@@ -9,6 +9,7 @@
     "slim/psr7": "^1.4",
     "firebase/php-jwt": "^5.2",
     "php-di/slim-bridge": "^3.1",
-    "php-di/php-di": "^6.3"
+    "php-di/php-di": "^6.3",
+    "vlucas/phpdotenv": "^5.3"
   }
 }

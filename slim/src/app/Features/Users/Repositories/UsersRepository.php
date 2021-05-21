@@ -58,7 +58,7 @@ class UsersRepository
     {
         $user = new User();
         $user->id = $data->id;
-        $user->display_name = $data->displayName;
+        $user->display_name = $data->display_name;
         $user->username = $data->username;
         $user->email = $data->email;
         $user->password = $data->password;

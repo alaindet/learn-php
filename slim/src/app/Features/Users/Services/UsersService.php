@@ -40,25 +40,25 @@ class UsersService
             throw HttpExceptionFactory::unauthorized($message);
         }
 
-        $issuerClaim = APP_JWT_ISSUER;
+        $issuerClaim = $_ENV['APP_JWT_SECRET'];
         $subjectClaim = $user->id; // TODO: Could be auth session ID
         $issuedAtClaim = time();
         $expiresInClaim = $issuedAtClaim + 3600; // An hour
         $notBeforeClaim = $issuedAtClaim;
 
         $claims = [
-            "iss" => $issuerClaim,
-            "sub" => $subjectClaim,
-            "exp" => $expiresInClaim,
-            "nbf" => $notBeforeClaim,
-            "iat" => $issuedAtClaim,
+            'iss' => $issuerClaim,
+            'sub' => $subjectClaim,
+            'exp' => $expiresInClaim,
+            'nbf' => $notBeforeClaim,
+            'iat' => $issuedAtClaim,
         ];
 
-        $jwt = JWT::encode($claims, APP_JWT_SECRET);
+        $token = JWT::encode($claims, $_ENV['APP_JWT_SECRET']);
 
         $dtoOut = new AuthenticatedUserDto();
         $dtoOut->email = $dtoIn->email;
-        $dtoOut->jwt = $jwt;
+        $dtoOut->token = $token;
         $dtoOut->expireAt = $expiresInClaim;
 
         return $dtoOut;
@@ -67,10 +67,12 @@ class UsersService
     static public function checkUserToken(?string $authHeader): array
     {
         try {
-            [$bearer, $token] = explode(" ", $authHeader);
-            return (array) JWT::decode($token, APP_JWT_SECRET, ['HS256']);
+            [$type, $token] = explode(' ', $authHeader);
+            $secret = $_ENV['APP_JWT_SECRET'];
+            $algorithms = ['HS256'];
+            return (array) JWT::decode($token, $secret, $algorithms);
         } catch (\Exception $e) {
-            throw new \Exception("Invalid or missing authorization token");
+            throw new \Exception('Invalid or missing authorization token');
         }
     }
 }
