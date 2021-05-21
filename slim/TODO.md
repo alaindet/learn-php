@@ -2,3 +2,4 @@
 - [ ] Query builder
 - [ ] Dependency Injection
 - [ ] Add app config and .env files
+- [ ] Read https://php-di.org/
