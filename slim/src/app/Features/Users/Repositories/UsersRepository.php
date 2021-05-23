@@ -35,7 +35,6 @@ class UsersRepository
         $user = new User();
         $user->id = time();
         $user->display_name = $dto->displayName;
-        $user->username = $dto->username;
         $user->email = $dto->email;
         $user->password = password_hash($dto->password, PASSWORD_BCRYPT);
 
@@ -54,12 +53,22 @@ class UsersRepository
         return null;
     }
 
+    public function findUserById(int $id): ?User
+    {
+        foreach ($this->data as $userData) {
+            if ($userData->id === $id) {
+                return $this->asUser($userData);
+            }
+        }
+
+        return null;
+    }
+
     public function asUser(object $data): User
     {
         $user = new User();
         $user->id = $data->id;
         $user->display_name = $data->display_name;
-        $user->username = $data->username;
         $user->email = $data->email;
         $user->password = $data->password;
 

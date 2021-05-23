@@ -1,6 +1,6 @@
 - [ ] Validation
 - [ ] Query builder
 - [ ] Dependency Injection
-- [ ] Add app config and .env files
+- [x] Add app config and .env files
 - [ ] Read https://php-di.org/
-- [ ] Add auth middleware
+- [x] Add auth middleware

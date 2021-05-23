@@ -1,16 +1,14 @@
 <?php
 
-use Slim\Routing\RouteCollectorProxy as RouteGroup;
-
 use App\Features\Users\Controllers\UsersController;
 use App\Core\Middlewares\JsonRequestBodyMiddleware;
+use App\Core\Middlewares\AuthenticationMiddleware;
 
-$usersRoutes = function(RouteGroup $group)
-{
-    $group->post('/login', UsersController::class . ':login');
-    $group->post('/register', UsersController::class . ':register');
-};
-
-$app
-    ->group('/users', $usersRoutes)
+$app->post('/users/login', UsersController::class . ':login')
     ->add(JsonRequestBodyMiddleware::class);
+
+$app->post('/users/register', UsersController::class . ':register')
+    ->add(JsonRequestBodyMiddleware::class);
+
+$app->get('/users/list', UsersController::class . ':list')
+    ->add(AuthenticationMiddleware::class);
